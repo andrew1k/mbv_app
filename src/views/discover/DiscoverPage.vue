@@ -80,7 +80,11 @@
       </v-expand-transition>
     </v-card>
     <!-- --------------------------------------------------------------------------------------------------------------- -->
-    <v-card rounded="xl" class="mb-4 mt-2 mx-2">
+    <v-card 
+      rounded="xl" 
+      :variant="purposes.discipleship.isOpen? 'text' : 'elevated'"
+      class="mb-4 mt-2 mx-2"
+    >
       <v-card-item
         @click="purposes.discipleship.isOpen = !purposes.discipleship.isOpen"
         :title="purposes.discipleship.title"
@@ -92,7 +96,21 @@
       </v-card-item>
       <v-expand-transition>
         <v-card v-if="purposes.discipleship.isOpen" elevation="0" rounded="0" variant="text">
-          <v-card
+          <v-card class="ma-2" height="220" :image="theologypop" href="https://t.me/theologypop">
+            <div class="fill-height bottom-gradient-darker d-flex flex-column align-center justify-end">
+              <h3 class="text-white">Популярное богословие</h3>
+              <p class="text-mono text-white text-caption">Для тех, кто ещё ищет.</p>
+              <v-btn
+                class="ma-2"
+                color="surface"
+                variant="outlined"
+                href="https://t.me/theologypop"
+              >
+                Хочу узнать больше
+              </v-btn>
+            </div>
+          </v-card>
+          <!-- <v-card
             elevation="0"
             rounded="0"
             variant="text"
@@ -109,7 +127,7 @@
                 :subtitle="pAct.subtitle"
               />
             </v-card-actions>
-          </v-card>
+          </v-card> -->
         </v-card>
       </v-expand-transition>
     </v-card>
@@ -249,6 +267,7 @@ import SG from '@/assets/fellowshipPics/smallGroups.jpg'
 import openSG from '@/assets/fellowshipPics/openSG.jpg'
 import baptism from '@/assets/fellowshipPics/baptismSq.jpg'
 import ministry from '@/assets/ministryPics/step.jpg'
+import theologypop from '@/assets/discepleshipPics/theologypop.png'
 
 
 const purposes = ref({
@@ -306,7 +325,7 @@ const purposes = ref({
     route: '/purposes/discipleship',
     color: 'discipleship',
     icon: 'mdi-school-outline',
-    isOpen: false,
+    isOpen: true,
     actions: [
       {
         title: 'Наставничество',
@@ -332,7 +351,7 @@ const purposes = ref({
     route: '/purposes/ministry',
     color: 'ministry',
     icon: 'mdi-hand-heart-outline',
-    isOpen: false,
+    isOpen: true,
   },
   evangelism: {
     title: 'Поделиться верой',

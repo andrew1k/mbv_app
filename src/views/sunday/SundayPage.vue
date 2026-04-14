@@ -7,16 +7,17 @@
 <!--    <h3 class="text-center my-3">{{ sunday.title }}</h3>-->
     <v-card class="ma-2 pa-2">
       <h4 class="ma-2">Конспект проповеди</h4>
-      <QuillEditor v-model:content="sunday.text" content-type="html" toolbar="minimal"/>
+      <VTextarea :model-value="sunday.text" auto-grow />
+      <!-- <QuillEditor  v-model:content="sunday.text" content-type="html" toolbar="minimal"/> -->
       <v-card-actions>
-        <vSpacer/>
+        <!-- <vSpacer/>
         <v-btn
           @click="saveSundayNotes(sunday)"
           variant="outlined"
           prepend-icon="mdi-bookmark-outline"
         >
-          Сохранить
-        </v-btn>
+          Сохранить`
+        </v-btn> -->
       </v-card-actions>
     </v-card>
   </v-card>

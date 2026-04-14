@@ -34,7 +34,7 @@
         </v-card>
       </v-expand-transition>
     </v-card>
-    <v-card class="mx-2 mt-4" to="/profile/notes">
+    <!-- <v-card class="mx-2 mt-4" to="/profile/notes">
       <v-card class="d-flex ">
         <v-avatar class="ml-3 my-2" variant="outlined">
           <VIcon size="x-large" icon="mdi-arrow-down"/>
@@ -43,7 +43,7 @@
           Сохранения
         </v-card-title>
       </v-card>
-    </v-card>
+    </v-card> -->
     <v-card class="mx-2 mt-4">
       <v-card class="d-flex ">
         <v-avatar class="ml-3 my-2" variant="outlined">

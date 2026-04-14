@@ -60,9 +60,11 @@
 <script setup>
 import {useAuthStore} from '@/store/auth.store'
 import {storeToRefs} from 'pinia'
+import {ref} from 'vue'
 
 const authStore = useAuthStore()
 const {signedEventsIds} = storeToRefs(authStore)
+const show = ref(false)
 
 defineProps({
   eventTitle: {
@@ -86,10 +88,6 @@ defineProps({
   },
   eventIcon: {
     type: String,
-  },
-  show: {
-    type: Boolean,
-    default: false,
   },
   btnTitle: {
     type: String,
