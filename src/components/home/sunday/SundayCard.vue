@@ -26,13 +26,8 @@
 import {useContentStore} from '@/store/content.store'
 import {storeToRefs} from 'pinia'
 import {useAppState} from '@/store/app.store'
-import {onBeforeMount} from 'vue'
 
 const contentStore = useContentStore()
-const {getSunday} = contentStore
-onBeforeMount(() => {
-  getSunday()
-})
 const {sunday} = storeToRefs(contentStore)
 
 const appState = useAppState()

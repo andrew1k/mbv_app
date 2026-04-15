@@ -35,20 +35,15 @@
 <script setup>
 import {useContentStore} from '@/store/content.store'
 import {storeToRefs} from 'pinia'
-import {onBeforeMount, ref} from 'vue'
+import {ref} from 'vue'
 import StoryCard from '@/components/home/stories/StoryCard.vue'
 import {useAppState} from '@/store/app.store'
 
 const newsfeedStore = useContentStore()
-const {getStories} = newsfeedStore
 const {stories} = storeToRefs(newsfeedStore)
 
 const appState = useAppState()
 const {isPending} = storeToRefs(appState)
-
-onBeforeMount(() => {
-  getStories()
-})
 
 const model = ref(null)
 </script>

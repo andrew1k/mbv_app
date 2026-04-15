@@ -27,15 +27,52 @@ export const useContentStore = defineStore('contentStore', () => {
   const newsItem = ref()
   const sunday = ref({docId: '0'})
   const appState = useAppState()
-  const {isPending} = storeToRefs(appState)
+  const {startLoading, finishLoading} = appState
   const {uid} = storeToRefs(useAuthStore())
   const {setMessage} = useSnackbarMessages()
 
-  async function getSunday() {
-    isPending.value = true
+  const sundayListener = ref(null)
+  const newsListener = ref(null)
+  const storiesListener = ref(null)
+
+  function safeUnsubscribe(listenerRef) {
+    if (listenerRef.value) {
+      listenerRef.value()
+      listenerRef.value = null
+    }
+  }
+
+  function snapshotPromise(source, onSnapshotData) {
+    return new Promise((resolve, reject) => {
+      let settled = false
+      const unsubscribe = onSnapshot(source, (snapshot) => {
+        if (settled) return
+        settled = true
+        clearTimeout(timeout)
+        onSnapshotData(snapshot)
+        resolve(unsubscribe)
+      }, (error) => {
+        if (settled) return
+        settled = true
+        clearTimeout(timeout)
+        reject(error)
+      })
+
+      const timeout = setTimeout(() => {
+        if (settled) return
+        settled = true
+        resolve(unsubscribe)
+      }, 10000)
+    })
+  }
+
+  async function getSunday(force = false) {
+    if (sundayListener.value && !force) return
+    if (force) safeUnsubscribe(sundayListener)
+    startLoading()
     try {
       const q = query(collection(db, 'sunday'), orderBy('timeId', 'desc'), limit(1))
-      onSnapshot(q, (qSnapshot) => {
+      sundayListener.value = await snapshotPromise(q, (qSnapshot) => {
         qSnapshot.forEach(doc => {
           const docId = doc.id
           sunday.value = {...doc.data(), docId}
@@ -43,8 +80,10 @@ export const useContentStore = defineStore('contentStore', () => {
       })
     } catch (e) {
       setMessage(e.message)
+      throw e
+    } finally {
+      finishLoading()
     }
-    isPending.value = false
   }
 
   async function saveSundayNotes(note) {
@@ -90,10 +129,12 @@ export const useContentStore = defineStore('contentStore', () => {
     }
   }
 
-  async function getNews() {
-    isPending.value = true
+  async function getNews(force = false) {
+    if (newsListener.value && !force) return
+    if (force) safeUnsubscribe(newsListener)
+    startLoading()
     try {
-      onSnapshot(collection(db, 'newsfeed'), (snapshot) => {
+      newsListener.value = await snapshotPromise(collection(db, 'newsfeed'), (snapshot) => {
         snapshot.forEach(doc => {
           const id = doc.id
           const data = doc.data()
@@ -105,8 +146,10 @@ export const useContentStore = defineStore('contentStore', () => {
       })
     } catch (e) {
       setMessage(e.message)
+      throw e
+    } finally {
+      finishLoading()
     }
-    isPending.value = false
   }
 
   async function getNewsItem(newsId) {
@@ -114,10 +157,12 @@ export const useContentStore = defineStore('contentStore', () => {
     if (newsSnap.exists()) newsItem.value = newsSnap.data()
   }
 
-  async function getStories() {
-    isPending.value = true
+  async function getStories(force = false) {
+    if (storiesListener.value && !force) return
+    if (force) safeUnsubscribe(storiesListener)
+    startLoading()
     try {
-      onSnapshot(collection(db, 'stories'), (snapshot) => {
+      storiesListener.value = await snapshotPromise(collection(db, 'stories'), (snapshot) => {
         snapshot.forEach(doc => {
           const id = doc.id
           const data = doc.data()
@@ -129,8 +174,10 @@ export const useContentStore = defineStore('contentStore', () => {
       })
     } catch (e) {
       setMessage(e.message)
+      throw e
+    } finally {
+      finishLoading()
     }
-    isPending.value = false
   }
 
   const sgLeadersData = ref([])

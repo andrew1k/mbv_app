@@ -29,62 +29,103 @@ export const useCalendarEventsStore = defineStore('calendarEventsStore', () => {
   const filterDay = ref()
   // ------------------------------ app state
   const appState = useAppState()
-  const {isPending} = storeToRefs(appState)
+  const {startLoading, finishLoading} = appState
+  // ------------------------------ snapshot listeners
+  const calendarListener = ref(null)
+
+  function safeUnsubscribe(listenerRef) {
+    if (listenerRef.value) {
+      listenerRef.value()
+      listenerRef.value = null
+    }
+  }
+
+  function snapshotPromise(source, onSnapshotData) {
+    return new Promise((resolve, reject) => {
+      let settled = false
+      const unsubscribe = onSnapshot(source, (snapshot) => {
+        if (settled) return
+        settled = true
+        clearTimeout(timeout)
+        onSnapshotData(snapshot)
+        resolve(unsubscribe)
+      }, (error) => {
+        if (settled) return
+        settled = true
+        clearTimeout(timeout)
+        reject(error)
+      })
+
+      const timeout = setTimeout(() => {
+        if (settled) return
+        settled = true
+        resolve(unsubscribe)
+      }, 10000)
+    })
+  }
   // ------------------------------ Notifications
   const {scheduleCalendarNotification} = useNotificationsStore()
 
-  async function getCalendarEvents() {
-    isPending.value = true
+  async function getCalendarEvents(force = false) {
+    if (calendarListener.value && !force) return
+    if (force) safeUnsubscribe(calendarListener)
+    startLoading()
     const colRef = collection(db, 'calendar')
 
-    await onSnapshot(colRef, snapshot => {
-      let events = []
-      let days = {}
-      let filteredEvents = []
-      // get data from collection
-      snapshot.docs.forEach(doc => {
+    try {
+      calendarListener.value = await snapshotPromise(colRef, snapshot => {
+        let events = []
+        let days = {}
+        let filteredEvents = []
+        // get data from collection
+        docIds.value = []
+        snapshot.docs.forEach(doc => {
+          // get doc ID to docIds Array
+          docIds.value.push(doc.id)
 
-        // get doc ID to docIds Array
-        docIds.value.push(doc.id)
+          // doc.data() method to get data from docs
+          let docData = doc.data()
+          let dayEvents = Object.values(docData)
 
-        // doc.data() method to get data from docs
-        let docData = doc.data()
-        let dayEvents = Object.values(docData)
+          // make it one array of all events
+          events.push(...dayEvents)
 
-        // make it one array of all events
-        events.push(...dayEvents)
+          // set object by days and their arrays
+          days[doc.id] = dayEvents
+        })
 
-        // set object by days and their arrays
-        days[doc.id] = dayEvents
+        // ------------------------------------------  getting current week
+        let curr = new Date()
+        let week = []
+        for (let i = 1; i <= 7; i++) {
+          let first = curr.getDate() - curr.getDay() + i
+          let day = new Date(curr.setDate(first)).toISOString().slice(0, 10)
+          week.push(day)
+        }
+        // ------------------------------------------ filter documents by week days
+        let filteredDays = Object.keys(days)
+          .filter(key => week.includes(key))
+          .reduce((obj, key) => {
+            obj[key] = days[key]
+            return obj
+          }, {})
+        // write all arrays of objects to one array
+        Object.values(filteredDays).forEach(arr => {
+          filteredEvents.push(...arr)
+        })
+        allCalendarEvents.value = events.sort((a,b) => {
+          const dateA = a.start
+          const dateB = b.start
+          return dateA - dateB
+        })
+        weekCalendarEvents.value = filteredEvents
       })
-
-      // ------------------------------------------  getting current week
-      let curr = new Date
-      let week = []
-      for (let i = 1; i <= 7; i++) {
-        let first = curr.getDate() - curr.getDay() + i
-        let day = new Date(curr.setDate(first)).toISOString().slice(0, 10)
-        week.push(day)
-      }
-      // ------------------------------------------ filter documents by week days
-      let filteredDays = Object.keys(days)
-        .filter(key => week.includes(key))
-        .reduce((obj, key) => {
-          obj[key] = days[key]
-          return obj
-        }, {})
-      // write all arrays of objects to one array
-      Object.values(filteredDays).map(arr => {
-        filteredEvents.push(...arr)
-      })
-      allCalendarEvents.value = events.sort((a,b) => {
-        const dateA = a.start
-        const dateB = b.start
-        return dateA - dateB
-      })
-      weekCalendarEvents.value = filteredEvents
-      isPending.value = false
-    })
+    } catch (e) {
+      setMessage(e.message)
+      throw e
+    } finally {
+      finishLoading()
+    }
   }
 
   async function signToEvent(evnt) {

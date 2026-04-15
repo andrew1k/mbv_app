@@ -1,6 +1,17 @@
 <template>
   <v-card class="mx-2 mt-2 mb-8" :to="{ name: 'NewsPage', params: { id }}">
-    <v-img :src="img" eager />
+    <v-img 
+      :src="img" 
+      eager 
+      :aspect-ratio="16/9" 
+      cover
+    >
+      <template v-slot:placeholder>
+        <div class="fill-height">
+          <v-skeleton-loader type="image" class="fill-height"/>
+        </div>
+      </template>
+    </v-img>
     <VCardText><h2>{{title}}</h2></VCardText>
     <v-card-text class="py-0">{{subtitle}}</v-card-text>
     <v-card-actions class="mx-0 px-0">

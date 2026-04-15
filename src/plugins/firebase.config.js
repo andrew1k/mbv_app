@@ -4,14 +4,38 @@ import {getAuth, initializeAuth, indexedDBLocalPersistence} from 'firebase/auth'
 import {getFirestore} from 'firebase/firestore'
 import {getStorage} from 'firebase/storage'
 
+const api = import.meta.env.VUE_APP_API_KEY
+const authDomain = import.meta.env.VUE_APP_AUTH_DOMAIN
+const id = import.meta.env.VUE_APP_PROJECT_ID
+const bucket = import.meta.env.VUE_APP_STORAGE_BUCKET
+const messaging = import.meta.env.VUE_APP_MESSAGING_SENDER_ID
+const appId = import.meta.env.VUE_APP_APP_ID
+const measurement = import.meta.env.VUE_APP_MEASUREMENT_ID
+
+// Debug: Check if env variables are loaded
+console.log('Environment variables:', {
+  api: !!api,
+  authDomain: !!authDomain,
+  id: !!id,
+  bucket: !!bucket,
+  messaging: !!messaging,
+  appId: !!appId,
+  measurement: !!measurement
+})
+
+// Validate required environment variables
+if (!api || !authDomain || !id || !bucket || !messaging || !appId) {
+  throw new Error('Missing required Firebase environment variables. Please check your .env file.')
+}
+
 const firebaseConfig = {
-  apiKey: 'AIzaSyDcKTCmJRy4f5ut2GLL1_ilD2B3vdtI0iY',
-  authDomain: 'mbv-app.firebaseapp.com',
-  projectId: 'mbv-app',
-  storageBucket: 'mbv-app.appspot.com',
-  messagingSenderId: '864056027637',
-  appId: '1:864056027637:web:4d3349dd4c8860a16018bc',
-  measurementId: 'G-GY97JF5GKJ',
+  apiKey: api,
+  authDomain: authDomain,
+  projectId: id,
+  storageBucket: bucket,
+  messagingSenderId: messaging,
+  appId: appId,
+  measurementId: measurement,
 }
 
 

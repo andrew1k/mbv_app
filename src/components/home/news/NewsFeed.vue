@@ -18,13 +18,7 @@
 import NewsCard from '@/components/home/news/NewsCard.vue'
 import {useContentStore} from '@/store/content.store'
 import {storeToRefs} from 'pinia'
-import {onBeforeMount} from 'vue'
 
 const contentStore = useContentStore()
-const {getNews} = contentStore
-onBeforeMount(() => {
-  getNews()
-})
-
 const {news} = storeToRefs(contentStore)
 </script>
