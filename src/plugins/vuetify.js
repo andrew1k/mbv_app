@@ -5,8 +5,16 @@ import 'vuetify/styles'
 // Vuetify
 import {createVuetify} from 'vuetify'
 import {md3} from 'vuetify/blueprints'
+import { aliases, fa } from 'vuetify/iconsets/fa'
 
 export default createVuetify({
+  icons: {
+    defaultSet: 'mdi',
+    aliases,
+    sets: {
+      fa,
+    },
+  },
     blueprint: md3,
     defaults: {
       global: {},

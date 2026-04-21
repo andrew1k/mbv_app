@@ -4,12 +4,37 @@
       <VProgressLinear indeterminate v-if="isSubmitting"/>
       <v-card-title>Зарегистрироваться</v-card-title>
       <v-form @submit.prevent="submit">
+        <!-- Required Fields -->
+        <div class="text-caption text-medium-emphasis mb-2">Обязательные поля *</div>
+        
         <vTextField
-          label="Имя"
+          label="Имя *"
           v-model="firstName"
           :error-messages="firstNameError"
           @blur="firstNameBlur"
+          required
         />
+        <vTextField
+          label="Email *"
+          v-model="email"
+          :error-messages="eError"
+          @blur="eBlur"
+          required
+        />
+        <vTextField
+          label="Пароль *"
+          v-model="password"
+          :error-messages="pError"
+          @blur="pBlur"
+          :type="showPassword ? 'text' : 'password'"
+          :append-inner-icon="showPassword ?'mdi-eye-off' : 'mdi-eye'"
+          @click:append-inner="showPassword = !showPassword"
+          required
+        />
+
+        <!-- Optional Fields -->
+        <div class="text-caption text-medium-emphasis mb-2 mt-4">Дополнительная информация (опционально)</div>
+        
         <vTextField
           label="Фамилия"
           v-model="secondName"
@@ -31,35 +56,10 @@
           @blur="birthDateBlur"
           type="date"
         />
-        <vTextField
-          label="Email"
-          v-model="email"
-          :error-messages="eError"
-          @blur="eBlur"
-        />
-        <vTextField
-          label="Пароль"
-          v-model="password"
-          :error-messages="pError"
-          @blur="pBlur"
-          :type="showPassword ? 'text' : 'password'"
-          :append-inner-icon="showPassword ?'mdi-eye-off' : 'mdi-eye'"
-          @click:append-inner="showPassword = !showPassword"
-        />
-        <v-radio-group
-          label="Ваш пол"
-          v-model="personGender"
-          :error-messages="personGenderError"
-          @blur="personGenderBlur"
-          inline
-        >
-          <vRadio label="Мужской" value="male"/>
-          <vRadio label="Женский" value="female"/>
-        </v-radio-group>
+
+        <!-- Agreement -->
         <v-checkbox
           v-model="acceptCheckbox"
-          color="primary"
-          density="compact"
         >
           <template v-slot:label>
             <div>
@@ -111,30 +111,17 @@ const additionalCheckbox = ref(['familyStatus', 'baptism', 'churchMembership', '
 const showAll = ref(true)
 
 const {handleSubmit, isSubmitting} = useForm()
+
+// Required fields
 const {value: firstName, errorMessage: firstNameError, handleBlur: firstNameBlur} = useField('firstName',
   yup
     .string()
-    .min(2)
+    .trim()
     .required('Это поле обязательно')
-    .max(32),
+    .min(2, 'Минимум 2 символа')
+    .max(32, 'Максимум 32 символа'),
 )
-const {value: secondName, errorMessage: secondNameError, handleBlur: secondNameBlur} = useField('secondName',
-  yup
-    .string()
-    .min(2)
-    .required('Это поле обязательно')
-    .max(32),
-)
-const {value: phoneNumber, errorMessage: phoneNumberError, handleBlur: phoneNumberBlur} = useField('phoneNumber',
-  yup
-    .number()
-    .required('Это поле обязательно'),
-)
-const {value: birthDate, errorMessage: birthDateError, handleBlur: birthDateBlur} = useField('birthDate',
-  yup
-    .date()
-    .required('Это поле обязательно'),
-)
+
 const {value: email, errorMessage: eError, handleBlur: eBlur} = useField('email',
   yup
     .string()
@@ -142,6 +129,7 @@ const {value: email, errorMessage: eError, handleBlur: eBlur} = useField('email'
     .required('Поле email должно быть заполнено')
     .email('Введите валидный email'),
 )
+
 const {value: password, errorMessage: pError, handleBlur: pBlur} = useField('password',
   yup
     .string()
@@ -151,8 +139,28 @@ const {value: password, errorMessage: pError, handleBlur: pBlur} = useField('pas
     .max(32, 'Не должно иметь более 32 символов'),
 )
 
-const {value: personGender, errorMessage: personGenderError, handleBlur: personGenderBlur} = useField('personGender',
-  yup.string().required('Это поле обязательно'),
+// Optional fields
+const {value: secondName, errorMessage: secondNameError, handleBlur: secondNameBlur} = useField('secondName',
+  yup
+    .string()
+    .trim()
+    .min(2, 'Минимум 2 символа')
+    .max(32, 'Максимум 32 символа')
+    .nullable(),
+)
+
+const {value: phoneNumber, errorMessage: phoneNumberError, handleBlur: phoneNumberBlur} = useField('phoneNumber',
+  yup
+    .string()
+    .matches(/^[0-9]{0,10}$/, 'Только цифры, максимум 10 символов')
+    .nullable(),
+)
+
+const {value: birthDate, errorMessage: birthDateError, handleBlur: birthDateBlur} = useField('birthDate',
+  yup
+    .date()
+    .typeError('Введите корректную дату')
+    .nullable(),
 )
 
 const submit = handleSubmit(async values => {

@@ -10,10 +10,7 @@
           size="x-small"
         />
         <v-card-subtitle>
-          {{ user?.birthDate + ' => ' }} <b>{{ userAge }}</b>
-        </v-card-subtitle>
-        <v-card-subtitle>
-          {{ user?.personGender }}
+          {{ user?.birthDate }}
         </v-card-subtitle>
       </v-card-title>
       <v-card-title class="ma-0 py-0">

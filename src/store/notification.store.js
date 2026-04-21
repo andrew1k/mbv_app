@@ -6,28 +6,45 @@ import { PushNotifications } from '@capacitor/push-notifications'
 export const useNotificationsStore = defineStore('notificationsStore', () => {
   const {setMessage} = useSnackbarMessages()
 
+  const requestLocalNotificationPermission = async () => {
+    const currentPerm = await LocalNotifications.checkPermissions()
+    if (currentPerm.display === 'prompt' || currentPerm.display === 'denied') {
+      return LocalNotifications.requestPermissions()
+    }
+    return currentPerm
+  }
 
-    // TODO: добавить PushNotifications https://capawesome.io/blog/the-push-notifications-guide-for-capacitor/
-  const scheduleCalendarNotification = (event) => {
-    LocalNotifications.checkPermissions()
-      .then(() => {
-        LocalNotifications.schedule({
-          notifications: [{...event}],
-        }).then(() => {
-          setMessage(`Отлично, вы записались на ${event.title}`)
-        }).catch((e) => {
-          setMessage('Что-то пошло не так, обновите настройки уведомлений: ' + e)
-          LocalNotifications.requestPermissions()
-            .catch(() => {
-              setMessage('Что-то не так, проверьте настройки вручную')
-            })
-        })
-      }).catch(() => {
-      setMessage('Разрешите отправлять вам уведомления')
-    })
+  const ensureLocalNotificationPermission = async () => {
+    const permStatus = await requestLocalNotificationPermission()
+    if (permStatus.display !== 'granted') {
+      setMessage('Разрешите локальные уведомления, чтобы получать напоминания о событиях.')
+    }
+    return permStatus
+  }
+
+  const scheduleCalendarNotification = async (event) => {
+    try {
+      const permStatus = await ensureLocalNotificationPermission()
+      if (permStatus.display !== 'granted') return
+
+      await LocalNotifications.schedule({
+        notifications: [{...event}],
+      })
+      setMessage(`Отлично, вы записались на ${event.title}`)
+    } catch (e) {
+      setMessage('Что-то пошло не так, обновите настройки уведомлений: ' + e.message)
+    }
   }
 
   const addListeners = async () => {
+    await LocalNotifications.addListener('localNotificationReceived', notification => {
+      console.log('Local notification received:', notification)
+    })
+
+    await LocalNotifications.addListener('localNotificationActionPerformed', notification => {
+      console.log('Local notification action performed:', notification.actionId, notification.inputValue)
+    })
+
     await PushNotifications.addListener('registration', token => {
       console.info('Registration token: ', token.value)
     })
@@ -56,6 +73,7 @@ export const useNotificationsStore = defineStore('notificationsStore', () => {
       setMessage('Вы отключили уведомления')
     }
 
+    await addListeners()
     await PushNotifications.register();
   }
 
