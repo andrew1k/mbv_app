@@ -32,7 +32,7 @@
             <VSpacer/>
             <v-btn :color="linkColor" variant="tonal" v-if="linkLabel" :to="link">{{ linkLabel }}</v-btn>
           </v-toolbar>
-          <v-carousel hide-delimiters :progress="storyImgs.length > 1 ? linkColor : false" height="100vh">
+          <v-carousel hide-delimiters :progress="storyImgs.length > 1 ? linkColor : false">
 
             <template v-slot:prev="{ props }">
               <VBtn variant="text" size="x-large" icon="mdi-chevron-left" class="ml-n6"

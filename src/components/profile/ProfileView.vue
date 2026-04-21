@@ -4,7 +4,7 @@
       <VIcon size="40" icon="mdi-account"/>
     </v-avatar>
     <h2 class="mx-auto my-1 pa-0 font-weight-bold">
-      {{ `${dbUser.firstName} ${dbUser.secondName || ''}`.trim() }}
+      {{ dbUser.firstName + ' ' + dbUser.secondName }}
     </h2>
     <v-card-text class="text-mono pa-0 mb-3 mx-auto">{{ email }}</v-card-text>
   </v-card>

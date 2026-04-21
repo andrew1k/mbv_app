@@ -39,27 +39,19 @@ export const useAuthStore = defineStore('authStore', () => {
   const signedEventsIds = ref(computed(() => dbUser.value.signedEvents?.map(e => e.eventId)))
 
   // register notifications
-  const {registerNotifications, addListeners} = useNotificationsStore()
-
-  const requestLocalNotificationAccess = async () => {
-    const permStatus = await LocalNotifications.checkPermissions()
-    if (permStatus.display === 'prompt' || permStatus.display === 'denied') {
-      return LocalNotifications.requestPermissions()
-    }
-    return permStatus
-  }
+  const {registerNotifications} = useNotificationsStore()
 
   const appSignup = async (payload) => {  // ------------------------------------------------------------------------------------------------------------------------------------ Done: tests needed
     try {
       const res = await createUserWithEmailAndPassword(auth, payload.email, payload.password)
       if (!res) new Error('Произошла неизвестная ошибка, повторите попытку позже')
-      
       const dbData = {
         email: payload.email,
         firstName: payload.firstName,
-        secondName: payload.secondName || '',
-        birthDate: payload.birthDate || '',
-        phoneNumber: payload.phoneNumber || '',
+        secondName: payload.secondName,
+        personGender: payload.personGender,
+        birthDate: payload.birthDate,
+        phoneNumber: payload.phoneNumber,
         servTeam: [],
         signedEvents: [],
         verificationPerson: false,
@@ -71,15 +63,22 @@ export const useAuthStore = defineStore('authStore', () => {
         baptismDate: '',
         sundayNotes: [],
         churchLevel: 1, // 1 = newBorn, 2 = member, 3 = student, 4 = serv, 5 = leader
+        // listeners: {
+        //   loginsCounter: 0,
+        //   eventRegs: 0,
+        //   formsSend: 0,
+        //   notificationsRead: 0,
+        // },
       }
-      
       await setDoc(doc(db, 'users', res.user.uid), dbData)
-      const localPerm = await requestLocalNotificationAccess()
-      if (localPerm.display !== 'granted') {
-        setMessage('Разрешите локальные уведомления, чтобы получать напоминания о событиях.')
-      }
+      // await onSnapshot(doc(db, 'users', res.user.uid), (snapshot) => {
+      //   dbUser.value = snapshot.data()
+      // })
+      await LocalNotifications.checkPermissions().then((permStatus) => {
+        if (permStatus.display === 'denied' || permStatus.display === 'prompt') LocalNotifications.requestPermissions()
+        else if (permStatus.display !== 'granted') setMessage('Обновите настройки уведомлений!')
+      })
       await registerNotifications()
-      await addListeners()
       await router.push({name: 'Home'})
     } catch (e) {
       setMessage(e.message)
@@ -89,12 +88,7 @@ export const useAuthStore = defineStore('authStore', () => {
     try {
       const res = await signInWithEmailAndPassword(auth, payload.email, payload.password)
       if (!res) new Error('Ошибка входа, нет ответа с сервера')
-      const localPerm = await requestLocalNotificationAccess()
-      if (localPerm.display !== 'granted') {
-        setMessage('Разрешите локальные уведомления, чтобы получать напоминания о событиях.')
-      }
-      await registerNotifications()
-      await addListeners()
+      await LocalNotifications.requestPermissions()
       await router.push({name: 'Home'})
     } catch (e) {
       setMessage(e.message)

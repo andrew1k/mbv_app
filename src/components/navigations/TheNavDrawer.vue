@@ -8,7 +8,7 @@
     <template v-slot:prepend>
       <v-list-item
         class=" py-2"
-        :title="(`${dbUser.firstName} ${dbUser.secondName || ''}`).trim()"
+        :title="`${dbUser.firstName} ${dbUser.secondName}`"
         :subtitle="email"
         to="/profile"
         append-icon="mdi-chevron-right"
@@ -244,16 +244,16 @@
       </v-card-actions>
       <v-card-actions class="mb-2">
         <VSpacer/>
-        <a href="https://rutube.ru/channel/44579972/">
-          <VAvatar rounded="0" :image="yt" color="background"/>
+        <a href="https://www.youtube.com/@mbv1916">
+          <VAvatar rounded="0" :image="yt"/>
         </a>
         <VSpacer/>
         <a href="https://t.me/mbvspb">
-          <VAvatar rounded="0" :image="tg" color="background"/>
+          <VAvatar rounded="0" :image="tg"/>
         </a>
         <VSpacer/>
         <a href="https://vk.com/mbvspb">
-          <VAvatar rounded="0" :image="vk" color="background"/>
+          <VAvatar rounded="0" :image="vk"/>
         </a>
         <VSpacer/>
       </v-card-actions>
