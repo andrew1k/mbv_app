@@ -42,7 +42,7 @@
       </v-card-item>
       <v-expand-transition>
         <v-card v-if="purposes.fellowship.isOpen" rounded="0" variant="text">
-          <v-card class="ma-2" height="220" :image="firstMeeting">
+          <!-- <v-card class="ma-2" height="220" :image="firstMeeting">
             <div class="fill-height bottom-gradient-darker d-flex flex-column align-center justify-end">
               <h3 class="text-white">Встреча-знакомство</h3>
               <p class="text-mono text-white text-caption">Для тех, кто недавно в нашей церкви</p>
@@ -55,6 +55,20 @@
                 Узнать больше
               </v-btn>
             </div>
+          </v-card> -->
+          <v-card class="ma-2" height="220" :image="step" to="/purposes/fellowship/step">
+            <div class="fill-height bottom-gradient-darker d-flex flex-column align-center justify-end">
+              <h3 class="text-white">Семинар - «ШАГ 1»</h3>
+              <p class="text-mono text-white text-caption">Общение</p>
+              <v-btn
+                class="ma-2"
+                color="surface"
+                variant="outlined"
+                to="/purposes/fellowship/step"
+              >
+                Узнать больше
+              </v-btn>
+            </div>
           </v-card>
           <v-slide-group>
             <v-slide-group-item v-for="(pAct, i) in purposes.fellowship.actions" :key="i">
@@ -62,7 +76,7 @@
             </v-slide-group-item>
           </v-slide-group>
           <VDivider/>
-          <v-card class="ma-2" height="220" :image="SG">
+          <!-- <v-card class="ma-2" height="220" :image="SG">
             <div class="fill-height bottom-gradient-darker d-flex flex-column align-center justify-end">
               <h3 class="text-white">Малые Группы</h3>
               <p class="text-mono text-white text-caption">Станьте частью семьи</p>
@@ -75,7 +89,7 @@
                 Хочу узнать больше
               </v-btn>
             </div>
-          </v-card>
+          </v-card> -->
         </v-card>
       </v-expand-transition>
     </v-card>
@@ -96,20 +110,26 @@
       </v-card-item>
       <v-expand-transition>
         <v-card v-if="purposes.discipleship.isOpen" elevation="0" rounded="0" variant="text">
-          <v-card class="ma-2" height="220" :image="theologypop" href="https://t.me/theologypop">
+          <v-card class="ma-2" height="220" :image="step2" to="/purposes/discipleship/step">
             <div class="fill-height bottom-gradient-darker d-flex flex-column align-center justify-end">
-              <h3 class="text-white">Популярное богословие</h3>
-              <p class="text-mono text-white text-caption">Для тех, кто ещё ищет.</p>
+              <h3 class="text-white">Семинар - «ШАГ 2»</h3>
+              <p class="text-mono text-white text-caption">Ученичество</p>
               <v-btn
                 class="ma-2"
                 color="surface"
                 variant="outlined"
-                href="https://t.me/theologypop"
+                to="/purposes/discipleship/step"
               >
-                Хочу узнать больше
+                Узнать больше
               </v-btn>
             </div>
           </v-card>
+          <v-slide-group>
+            <v-slide-group-item v-for="(pAct, i) in purposes.discipleship.actions" :key="i">
+              <PurposeSliderItem :title="pAct.title" :route="pAct.route" :img="pAct.img"/>
+            </v-slide-group-item>
+          </v-slide-group>
+           <VDivider/>
           <!-- <v-card
             elevation="0"
             rounded="0"
@@ -263,11 +283,14 @@ import songs from '@/assets/worshipPics/songs.jpeg'
 import daily from '@/assets/worshipPics/Daily.jpg'
 import firstMeeting from '@/assets/fellowshipPics/firstMeeting.jpg'
 import step from '@/assets/fellowshipPics/step.jpg'
+import step2 from '@/assets/discepleshipPics/step.jpg'
 import SG from '@/assets/fellowshipPics/smallGroups.jpg'
 import openSG from '@/assets/fellowshipPics/openSG.jpg'
 import baptism from '@/assets/fellowshipPics/baptismSq.jpg'
 import ministry from '@/assets/ministryPics/step.jpg'
-import theologypop from '@/assets/discepleshipPics/theologypop.png'
+import popularTeology from '@/assets/discepleshipPics/theologypop.png'
+import growthMaterials from '@/assets/discepleshipPics/theologypop.png'
+import readBible from '@/assets/discepleshipPics/step.jpg'
 
 
 const purposes = ref({
@@ -279,23 +302,27 @@ const purposes = ref({
     isOpen: true,
     actions: [
       {
-        title: 'Воскресенье',
+        title: 'Воскресное богослужение',
         img: sunday,
         route: '/sunday',
-      },
-      {
-        title: 'Молитвы',
+      }, {
+        title: 'Молитвенное богослужение',
         img: praying,
         route: '/purposes/worship/prayer',
+      }, {
+        title: 'Городская ночная молитва',
+        img: praying,
+        route: '/purposes/worship/nightPrayer',
       }, {
         title: 'Песни',
         img: songs,
         href: 'https://band.link/mbvsing',
-      },{
-        title: 'Благословение на каждый день',
-        img: daily,
-        href: 'https://youtube.com/playlist?list=PLjjvxd6WcKV04vM9MkM6Gd69-qdkzpRbj&si=Rfh2J4VmqmlqTBrw',
-      },
+      }, 
+      // {
+      //   title: 'Благословение на каждый день',
+      //   img: daily,
+      //   href: 'https://youtube.com/playlist?list=PLjjvxd6WcKV04vM9MkM6Gd69-qdkzpRbj&si=Rfh2J4VmqmlqTBrw',
+      // }, 
     ],
   },
   fellowship: {
@@ -306,9 +333,13 @@ const purposes = ref({
     isOpen: true,
     actions: [
       {
-        title: 'Семинар - «ШАГ 1»',
-        img: step,
-        route: `/purposes/fellowship/step`,
+        title: 'Встреча-знакомство',
+        img: firstMeeting,
+        route: `/purposes/fellowship/firstMeeting`,
+      }, {
+        title: 'Малые Группы',
+        img: SG,
+        route: `/purposes/fellowship/smallGroups`,
       }, {
         title: 'Крещение',
         img: baptism,
@@ -317,7 +348,12 @@ const purposes = ref({
         title: 'Хочу открыть Малую Группу',
         img: openSG,
         route: `/purposes/fellowship/OpenSmallGroup`,
-      },
+      }, 
+      // {
+      //   title: 'Семинар - «ШАГ 1»',
+      //   img: step,
+      //   route: `/purposes/fellowship/step`,
+      // }, 
     ],
   },
   discipleship: {
@@ -328,16 +364,31 @@ const purposes = ref({
     isOpen: true,
     actions: [
       {
-        title: 'Наставничество',
-        subtitle: 'Мы поможем Вам узнать основы',
-        icon: 'mdi-account-arrow-up-outline',
-        route: '/purposes/discipleship/mentoring',
-      }, {
-        title: `Семинар - «ШАГ 2»`,
-        subtitle: 'Узнавая больше о духовном развитии',
-        icon: 'mdi-school-outline',
-        route: '/purposes/discipleship/step',
-      },
+        title: 'Читаем Библию вместе',
+        img: readBible,
+        route: `/purposes/discipleship/readBible`,
+      }, 
+      {
+        title: 'Популярное богословие',
+        img: popularTeology,
+        route: `/purposes/discipleship/popularTeology`,
+      }, 
+      {
+        title: 'Материалы для духовного роста',
+        img: readBible,
+        route: `/purposes/discipleship/growthMaterials`,
+      }, 
+      // {
+      //   title: 'Наставничество',
+      //   subtitle: 'Мы поможем Вам узнать основы',
+      //   icon: 'mdi-account-arrow-up-outline',
+      //   route: '/purposes/discipleship/mentoring',
+      // }, {
+      //   title: `Семинар - «ШАГ 2»`,
+      //   subtitle: 'Узнавая больше о духовном развитии',
+      //   icon: 'mdi-school-outline',
+      //   route: '/purposes/discipleship/step',
+      // },
       // {
       //   title: 'Семейное служение',
       //   subtitle: 'Твои корни',

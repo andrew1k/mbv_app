@@ -53,6 +53,14 @@ export default [
           color: 'worship',
         },
       }, {
+        path: '/purposes/worship/nightPrayer',
+        name: 'NightPrayerWorship',
+        component: () => import('@/views/purposes/worship/views/NightPrayerPage.vue'),
+        meta: {
+          title: 'Городская ночная молитва',
+          color: 'worship',
+        },
+      }, {
         path: '/purposes/fellowship/baptism',
         name: 'baptism',
         component: () => import('@/views/purposes/fellowship/views/BaptismPage.vue'),
@@ -114,7 +122,7 @@ export default [
         component: () => import('@/views/purposes/discipleship/views/StepTwoPage.vue'),
         meta: {
           title: 'Шаг 2',
-          color: 'ministry',
+          color: 'discipleship',
         },
       }, {
         path: '/purposes/discipleship/mentoring',
@@ -122,7 +130,31 @@ export default [
         component: () => import('@/views/purposes/discipleship/views/MentoringPage.vue'),
         meta: {
           title: 'Наставничество',
-          color: 'ministry',
+          color: 'discipleship',
+        },
+      }, {
+        path: '/purposes/discipleship/growthMaterials',
+        name: 'growthMaterials',
+        component: () => import('@/views/purposes/discipleship/views/GrowthMaterialsPage.vue'),
+        meta: {
+          title: 'Материалы для духовного роста',
+          color: 'discipleship',
+        },
+      }, {
+        path: '/purposes/discipleship/popularTeology',
+        name: 'popularTeology',
+        component: () => import('@/views/purposes/discipleship/views/PopularTeologyPage.vue'),
+        meta: {
+          title: 'Популярное богословие',
+          color: 'discipleship',
+        },
+      }, {
+        path: '/purposes/discipleship/readBible',
+        name: 'readBible',
+        component: () => import('@/views/purposes/discipleship/views/ReadBiblePage.vue'),
+        meta: {
+          title: 'Читаем Библию вместе',
+          color: 'discipleship',
         },
       }, {
         path: '/purposes/evangelism/vechno',
