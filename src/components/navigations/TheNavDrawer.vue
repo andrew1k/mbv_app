@@ -245,15 +245,15 @@
       <v-card-actions class="mb-2">
         <VSpacer/>
         <a href="https://www.youtube.com/@mbv1916">
-          <VAvatar rounded="0" :image="yt"/>
+          <VAvatar rounded="0" :image="yt" color="background"/>
         </a>
         <VSpacer/>
         <a href="https://t.me/mbvspb">
-          <VAvatar rounded="0" :image="tg"/>
+          <VAvatar rounded="0" :image="tg" color="background"/>
         </a>
         <VSpacer/>
         <a href="https://vk.com/mbvspb">
-          <VAvatar rounded="0" :image="vk"/>
+          <VAvatar rounded="0" :image="vk" color="background"/>
         </a>
         <VSpacer/>
       </v-card-actions>

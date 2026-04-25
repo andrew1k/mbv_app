@@ -32,7 +32,7 @@
             <VSpacer/>
             <v-btn :color="linkColor" variant="tonal" v-if="linkLabel" :to="link">{{ linkLabel }}</v-btn>
           </v-toolbar>
-          <v-carousel hide-delimiters :progress="storyImgs.length > 1 ? linkColor : false">
+          <v-carousel hide-delimiters :progress="storyImgs.length > 1 ? linkColor : false" height>
 
             <template v-slot:prev="{ props }">
               <VBtn variant="text" size="x-large" icon="mdi-chevron-left" class="ml-n6"
@@ -47,7 +47,7 @@
               :key="i"
               cover
             >
-              <v-img :src="img.strImgUrl" eager :aspect-ratio="9/16" cover>
+              <v-img :src="img.strImgUrl" eager cover :aspect-ratio="9 / 16">
                 <template v-slot:placeholder>
                   <v-row
                     class="fill-height ma-0"
