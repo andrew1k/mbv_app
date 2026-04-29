@@ -44,7 +44,9 @@ export default [
         meta: {
           title: 'Admin',
         },
-      }, {
+      },
+      // --------------------------------------------------------- WORSHIP ----------------------------------------------
+      {
         path: '/purposes/worship/prayer',
         name: 'PrayerWorship',
         component: () => import('@/views/purposes/worship/views/PrayerPage.vue'),
@@ -52,7 +54,8 @@ export default [
           title: 'Молитвы',
           color: 'worship',
         },
-      }, {
+      }, 
+      {
         path: '/purposes/worship/nightPrayer',
         name: 'NightPrayerWorship',
         component: () => import('@/views/purposes/worship/views/NightPrayerPage.vue'),
@@ -60,7 +63,18 @@ export default [
           title: 'Городская ночная молитва',
           color: 'worship',
         },
-      }, {
+      },
+      {
+        path: '/purposes/worship/worshipSongs',
+        name: 'WorshipSongsWorship',
+        component: () => import('@/views/purposes/worship/views/WorshipSongsPage.vue'),
+        meta: {
+          title: 'Песни',
+          color: 'worship',
+        },
+      },
+      // --------------------------------------------------------- FELLOWSHIP ----------------------------------------------
+      {
         path: '/purposes/fellowship/baptism',
         name: 'baptism',
         component: () => import('@/views/purposes/fellowship/views/BaptismPage.vue'),
@@ -100,7 +114,9 @@ export default [
           title: 'Открыть Малую Группу',
           color: 'fellowship',
         },
-      }, {
+      },
+      // --------------------------------------------------------- MINISTRY ----------------------------------------------
+      {
         path: '/purposes/ministry/step',
         name: 'stepThree',
         component: () => import('@/views/purposes/ministry/views/StepThreePage.vue'),
@@ -108,7 +124,8 @@ export default [
           title: 'Шаг 3',
           color: 'ministry',
         },
-      }, {
+      },
+       {
         path: '/purposes/ministry/signToMinistry',
         name: 'signToMinistry',
         component: () => import('@/views/purposes/ministry/views/SignToMinistryPage.vue'),
@@ -116,7 +133,27 @@ export default [
           title: 'Служение',
           color: 'ministry',
         },
-      }, {
+      },
+       {
+        path: '/purposes/ministry/allMinistries',
+        name: 'allMinistries',
+        component: () => import('@/views/purposes/ministry/views/AllMinistriesPage.vue'),
+        meta: {
+          title: 'Все служения',
+          color: 'ministry',
+        },
+      },
+       {
+        path: '/purposes/ministry/charity',
+        name: 'charity',
+        component: () => import('@/views/purposes/ministry/views/CharityPage.vue'),
+        meta: {
+          title: 'Благотворительность',
+          color: 'ministry',
+        },
+      },
+      // --------------------------------------------------------- DISCIPLESHIP ----------------------------------------------
+      {
         path: '/purposes/discipleship/step',
         name: 'stepTwo',
         component: () => import('@/views/purposes/discipleship/views/StepTwoPage.vue'),
@@ -156,7 +193,9 @@ export default [
           title: 'Читаем Библию вместе',
           color: 'discipleship',
         },
-      }, {
+      },
+      // --------------------------------------------------------- EVANGELISM ----------------------------------------------
+      {
         path: '/purposes/evangelism/vechno',
         name: 'vechno',
         component: () => import('@/views/purposes/evangelism/views/VechnoPage.vue'),
@@ -180,7 +219,8 @@ export default [
           title: 'Кто твой один',
           color: 'ministry',
         },
-      }, {
+      },
+       {
         path: '/purposes/evangelism/outreach',
         name: 'outreach',
         component: () => import('@/views/purposes/evangelism/views/OutreachPage.vue'),
@@ -188,7 +228,27 @@ export default [
           title: 'Уличная евангелизация',
           color: 'ministry',
         },
-      }, {
+      },
+       {
+        path: '/purposes/evangelism/evangelismProjects',
+        name: 'evangelismProjects',
+        component: () => import('@/views/purposes/evangelism/views/EvangelismProjectsPage.vue'),
+        meta: {
+          title: 'Евангельские проекты',
+          color: 'ministry',
+        },
+      },
+       {
+        path: '/purposes/evangelism/miracles',
+        name: 'miracles',
+        component: () => import('@/views/purposes/evangelism/views/GodsMiraclesPage.vue'),
+        meta: {
+          title: 'Чудеса Божьей славы',
+          color: 'ministry',
+        },
+      },
+      // --------------------------------------------------------- HELP ----------------------------------------------
+      {
         path: '/purposes/help/prayerSupport',
         name: 'prayerSupport',
         component: () => import('@/views/purposes/help/views/PrayerSupportPage.vue'),
@@ -212,7 +272,9 @@ export default [
           title: 'Ретрит',
           color: 'worship',
         },
-      }, {
+      },
+      // --------------------------------------------------------- OTHER ----------------------------------------------
+      {
         path: '/connect',
         name: 'connect',
         component: () => import('@/views/connect/ConnectionPage.vue'),

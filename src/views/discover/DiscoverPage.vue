@@ -6,7 +6,11 @@
     max-width="600"
     class="mx-auto"
   >
-    <v-card rounded="xl" :variant="purposes.worship.isOpen? 'text' : 'elevated'" class="mb-4 mt-2 mx-2">
+    <v-card 
+    rounded="s" 
+    :variant="purposes.worship.isOpen? 'text' : 'elevated'" 
+    class="mb-4 mt-2"
+    >
       <v-card-item
         :title="purposes.worship.title"
         @click="purposes.worship.isOpen = !purposes.worship.isOpen"
@@ -26,11 +30,12 @@
         </v-card>
       </v-expand-transition>
     </v-card>
+    <VDivider/>
     <!-- --------------------------------------------------------------------------------------------------------------- -->
     <v-card
-      rounded="xl"
+      rounded="s"
       :variant="purposes.fellowship.isOpen? 'text' : 'elevated'"
-      class="mb-4 mt-2 mx-2">
+      class="mb-4 mt-2">
       <v-card-item
         @click="purposes.fellowship.isOpen = !purposes.fellowship.isOpen"
         :append-icon="purposes.fellowship.isOpen ? 'mdi-chevron-up' : 'mdi-chevron-down'"
@@ -75,7 +80,7 @@
               <PurposeSliderItem :title="pAct.title" :route="pAct.route" :img="pAct.img"/>
             </v-slide-group-item>
           </v-slide-group>
-          <VDivider/>
+          
           <!-- <v-card class="ma-2" height="220" :image="SG">
             <div class="fill-height bottom-gradient-darker d-flex flex-column align-center justify-end">
               <h3 class="text-white">Малые Группы</h3>
@@ -93,11 +98,12 @@
         </v-card>
       </v-expand-transition>
     </v-card>
+    <VDivider/>
     <!-- --------------------------------------------------------------------------------------------------------------- -->
     <v-card 
-      rounded="xl" 
+      rounded="s" 
       :variant="purposes.discipleship.isOpen? 'text' : 'elevated'"
-      class="mb-4 mt-2 mx-2"
+      class="mb-4 mt-2"
     >
       <v-card-item
         @click="purposes.discipleship.isOpen = !purposes.discipleship.isOpen"
@@ -129,7 +135,6 @@
               <PurposeSliderItem :title="pAct.title" :route="pAct.route" :img="pAct.img"/>
             </v-slide-group-item>
           </v-slide-group>
-           <VDivider/>
           <!-- <v-card
             elevation="0"
             rounded="0"
@@ -151,8 +156,9 @@
         </v-card>
       </v-expand-transition>
     </v-card>
+    <VDivider/>
     <!-- --------------------------------------------------------------------------------------------------------------- -->
-    <v-card rounded="xl" :variant="purposes.ministry.isOpen? 'text' : 'elevated'" class="mb-4 mt-2 mx-2">
+    <v-card rounded="s" :variant="purposes.ministry.isOpen? 'text' : 'elevated'" class="mb-4 mt-2">
       <v-card-item
         @click="purposes.ministry.isOpen = !purposes.ministry.isOpen"
         :title="purposes.ministry.title"
@@ -164,27 +170,37 @@
       </v-card-item>
       <v-expand-transition>
         <v-card v-if="purposes.ministry.isOpen" rounded="0" variant="text">
-          <v-card class="ma-2" height="220" :image="ministry">
+          <v-card class="ma-2" height="220" :image="step3" to="/purposes/ministry/step">
             <div class="fill-height bottom-gradient-darker d-flex flex-column align-center justify-end">
-              <h3 class="text-white">Найдите своё служение</h3>
-              <p class="text-mono text-white text-caption">Раскрывая свои дары и таланты</p>
+              <h3 class="text-white">Семинар – «ШАГ 3»</h3>
+              <p class="text-mono text-white text-caption">Служение</p>
               <v-btn
                 class="ma-2"
                 color="surface"
                 variant="outlined"
-                to="/purposes/ministry/signToMinistry"
+                to="/purposes/ministry/step"
               >
-                Узнать о служениях в церкви
+                Узнать больше
               </v-btn>
             </div>
           </v-card>
-          <v-card
+          <v-expand-transition>
+            <v-card v-if="purposes.evangelism.isOpen" rounded="0" variant="text">
+              <v-slide-group>
+                <v-slide-group-item v-for="(pAct, i) in purposes.evangelism.actions" :key="i">
+                  <PurposeSliderItem :title="pAct.title" :route="pAct.route" :img="pAct.img" :href="pAct.href"/>
+                </v-slide-group-item>
+              </v-slide-group>
+            </v-card>
+          </v-expand-transition>
+          
+
+          <!-- <v-card
             rounded="0"
             variant="text"
             class="ma-0"
             to="/purposes/ministry/step"
           >
-            <VDivider/>
             <v-card-actions>
               <VIcon :icon="purposes.ministry.icon" color="ministry" class="ml-2"/>
               <VCardItem
@@ -192,14 +208,16 @@
                 subtitle="Узнавая больше о своей уникальности"
               />
             </v-card-actions>
-          </v-card>
+          </v-card> -->
         </v-card>
       </v-expand-transition>
     </v-card>
+    <VDivider/>
     <!-- --------------------------------------------------------------------------------------------------------------- -->
     <v-card
+      rounded="s"
       :variant="purposes.evangelism.isOpen ? 'text' : 'elevated'"
-      class="mb-4 mt-2 mx-2"
+      class="mb-4 mt-2"
     >
       <v-card-item
         @click="purposes.evangelism.isOpen = !purposes.evangelism.isOpen"
@@ -210,6 +228,20 @@
           <VIcon :color="purposes.evangelism.color" :icon="purposes.evangelism.icon"/>
         </template>
       </v-card-item>
+      <v-card class="ma-2" height="220" :image="step3" to="/purposes/ministry/step">
+            <div class="fill-height bottom-gradient-darker d-flex flex-column align-center justify-end">
+              <h3 class="text-white">Семинар – «ШАГ 3»</h3>
+              <p class="text-mono text-white text-caption">Служение</p>
+              <v-btn
+                class="ma-2"
+                color="surface"
+                variant="outlined"
+                to="/purposes/ministry/step"
+              >
+                Узнать больше
+              </v-btn>
+            </div>
+          </v-card>
       <v-expand-transition>
         <v-card v-if="purposes.evangelism.isOpen" rounded="0" variant="text">
           <v-slide-group>
@@ -220,6 +252,7 @@
         </v-card>
       </v-expand-transition>
     </v-card>
+    <VDivider/>
     <!-- --------------------------------------------------------------------------------------------------------------- -->
     <v-card rounded="xl" class="mb-4 mt-2 mx-2" to="/aboutChurch">
       <v-card-item title="О церкви" append-icon="mdi-chevron-right">
@@ -284,12 +317,11 @@ import daily from '@/assets/worshipPics/Daily.jpg'
 import firstMeeting from '@/assets/fellowshipPics/firstMeeting.jpg'
 import step from '@/assets/fellowshipPics/step.jpg'
 import step2 from '@/assets/discepleshipPics/step.jpg'
+import step3 from '@/assets/ministryPics/step.jpg'
 import SG from '@/assets/fellowshipPics/smallGroups.jpg'
 import openSG from '@/assets/fellowshipPics/openSG.jpg'
 import baptism from '@/assets/fellowshipPics/baptismSq.jpg'
-import ministry from '@/assets/ministryPics/step.jpg'
 import popularTeology from '@/assets/discepleshipPics/theologypop.png'
-import growthMaterials from '@/assets/discepleshipPics/theologypop.png'
 import readBible from '@/assets/discepleshipPics/step.jpg'
 
 
