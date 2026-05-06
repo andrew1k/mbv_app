@@ -1,138 +1,77 @@
 <template>
-  <v-card
-    elevation="0"
-    rounded="0"
-    variant="text"
-    max-width="600"
-    class="mx-auto"
-  >
-    <v-card 
-    rounded="s" 
-    :variant="purposes.worship.isOpen? 'text' : 'elevated'" 
-    class="mb-4 mt-2"
-    >
-      <v-card-item
-        :title="purposes.worship.title"
-        @click="purposes.worship.isOpen = !purposes.worship.isOpen"
-        :append-icon="purposes.worship.isOpen ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-      >
+  <v-card elevation="0" rounded="0" variant="text" max-width="600" class="mx-auto">
+    <v-card rounded="s" :variant="purposes.worship.isOpen ? 'text' : 'elevated'" class="mb-4 mt-2">
+      <v-card-item :title="purposes.worship.title" @click="purposes.worship.isOpen = !purposes.worship.isOpen"
+        :append-icon="purposes.worship.isOpen ? 'mdi-chevron-up' : 'mdi-chevron-down'">
         <template #prepend>
-          <VIcon :color="purposes.worship.color" :icon="purposes.worship.icon"/>
+          <VIcon :color="purposes.worship.color" :icon="purposes.worship.icon" />
         </template>
       </v-card-item>
       <v-expand-transition>
         <v-card v-if="purposes.worship.isOpen" elevation="0" rounded="0" variant="text">
           <v-slide-group>
             <v-slide-group-item v-for="(pAct, i) in purposes.worship.actions" :key="i">
-              <PurposeSliderItem :title="pAct.title" :route="pAct.route" :img="pAct.img" :href="pAct.href"/>
+              <PurposeSliderItem :title="pAct.title" :route="pAct.route" :img="pAct.img" :href="pAct.href" />
             </v-slide-group-item>
           </v-slide-group>
         </v-card>
       </v-expand-transition>
     </v-card>
-    <VDivider/>
+    <VDivider />
     <!-- --------------------------------------------------------------------------------------------------------------- -->
-    <v-card
-      rounded="s"
-      :variant="purposes.fellowship.isOpen? 'text' : 'elevated'"
-      class="mb-4 mt-2">
-      <v-card-item
-        @click="purposes.fellowship.isOpen = !purposes.fellowship.isOpen"
+    <v-card rounded="s" :variant="purposes.fellowship.isOpen ? 'text' : 'elevated'" class="mb-4 mt-2">
+      <v-card-item @click="purposes.fellowship.isOpen = !purposes.fellowship.isOpen"
         :append-icon="purposes.fellowship.isOpen ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-        :title="purposes.fellowship.title"
-      >
+        :title="purposes.fellowship.title">
         <template #prepend>
-          <VIcon :color="purposes.fellowship.color" :icon="purposes.fellowship.icon"/>
+          <VIcon :color="purposes.fellowship.color" :icon="purposes.fellowship.icon" />
         </template>
       </v-card-item>
       <v-expand-transition>
         <v-card v-if="purposes.fellowship.isOpen" rounded="0" variant="text">
-          <!-- <v-card class="ma-2" height="220" :image="firstMeeting">
-            <div class="fill-height bottom-gradient-darker d-flex flex-column align-center justify-end">
-              <h3 class="text-white">Встреча-знакомство</h3>
-              <p class="text-mono text-white text-caption">Для тех, кто недавно в нашей церкви</p>
-              <v-btn
-                class="ma-2"
-                color="surface"
-                variant="outlined"
-                to="/purposes/fellowship/firstMeeting"
-              >
-                Узнать больше
-              </v-btn>
-            </div>
-          </v-card> -->
           <v-card class="ma-2" height="220" :image="step" to="/purposes/fellowship/step">
             <div class="fill-height bottom-gradient-darker d-flex flex-column align-center justify-end">
-              <h3 class="text-white">Семинар - «ШАГ 1»</h3>
-              <p class="text-mono text-white text-caption">Общение</p>
-              <v-btn
-                class="ma-2"
-                color="surface"
-                variant="outlined"
-                to="/purposes/fellowship/step"
-              >
+              <h3 class="text-white">ШАГ 1 — общение</h3>
+              <p class="text-mono text-white text-caption">Семинар о вероучении, ценностях, видении и структуре нашей
+                церкви.</p>
+              <v-btn class="ma-2" color="surface" variant="outlined" to="/purposes/fellowship/step">
                 Узнать больше
               </v-btn>
             </div>
           </v-card>
           <v-slide-group>
             <v-slide-group-item v-for="(pAct, i) in purposes.fellowship.actions" :key="i">
-              <PurposeSliderItem :title="pAct.title" :route="pAct.route" :img="pAct.img"/>
+              <PurposeSliderItem :title="pAct.title" :route="pAct.route" :img="pAct.img" />
             </v-slide-group-item>
           </v-slide-group>
-          
-          <!-- <v-card class="ma-2" height="220" :image="SG">
-            <div class="fill-height bottom-gradient-darker d-flex flex-column align-center justify-end">
-              <h3 class="text-white">Малые Группы</h3>
-              <p class="text-mono text-white text-caption">Станьте частью семьи</p>
-              <v-btn
-                class="ma-2"
-                color="surface"
-                variant="outlined"
-                to="/purposes/fellowship/smallGroups"
-              >
-                Хочу узнать больше
-              </v-btn>
-            </div>
-          </v-card> -->
         </v-card>
       </v-expand-transition>
     </v-card>
-    <VDivider/>
+    <VDivider />
     <!-- --------------------------------------------------------------------------------------------------------------- -->
-    <v-card 
-      rounded="s" 
-      :variant="purposes.discipleship.isOpen? 'text' : 'elevated'"
-      class="mb-4 mt-2"
-    >
-      <v-card-item
-        @click="purposes.discipleship.isOpen = !purposes.discipleship.isOpen"
+    <v-card rounded="s" :variant="purposes.discipleship.isOpen ? 'text' : 'elevated'" class="mb-4 mt-2">
+      <v-card-item @click="purposes.discipleship.isOpen = !purposes.discipleship.isOpen"
         :title="purposes.discipleship.title"
-        :append-icon="purposes.discipleship.isOpen ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-      >
+        :append-icon="purposes.discipleship.isOpen ? 'mdi-chevron-up' : 'mdi-chevron-down'">
         <template #prepend>
-          <VIcon :color="purposes.discipleship.color" :icon="purposes.discipleship.icon"/>
+          <VIcon :color="purposes.discipleship.color" :icon="purposes.discipleship.icon" />
         </template>
       </v-card-item>
       <v-expand-transition>
         <v-card v-if="purposes.discipleship.isOpen" elevation="0" rounded="0" variant="text">
           <v-card class="ma-2" height="220" :image="step2" to="/purposes/discipleship/step">
             <div class="fill-height bottom-gradient-darker d-flex flex-column align-center justify-end">
-              <h3 class="text-white">Семинар - «ШАГ 2»</h3>
-              <p class="text-mono text-white text-caption">Ученичество</p>
-              <v-btn
-                class="ma-2"
-                color="surface"
-                variant="outlined"
-                to="/purposes/discipleship/step"
-              >
+              <h3 class="text-white">ШАГ 2 — ученичество</h3>
+              <p class="text-mono text-white text-caption">Семинар о важности духовного роста в жизни любого человека.
+              </p>
+              <v-btn class="ma-2" color="surface" variant="outlined" to="/purposes/discipleship/step">
                 Узнать больше
               </v-btn>
             </div>
           </v-card>
           <v-slide-group>
             <v-slide-group-item v-for="(pAct, i) in purposes.discipleship.actions" :key="i">
-              <PurposeSliderItem :title="pAct.title" :route="pAct.route" :img="pAct.img"/>
+              <PurposeSliderItem :title="pAct.title" :route="pAct.route" :img="pAct.img" />
             </v-slide-group-item>
           </v-slide-group>
           <!-- <v-card
@@ -156,141 +95,91 @@
         </v-card>
       </v-expand-transition>
     </v-card>
-    <VDivider/>
+    <VDivider />
     <!-- --------------------------------------------------------------------------------------------------------------- -->
-    <v-card rounded="s" :variant="purposes.ministry.isOpen? 'text' : 'elevated'" class="mb-4 mt-2">
-      <v-card-item
-        @click="purposes.ministry.isOpen = !purposes.ministry.isOpen"
-        :title="purposes.ministry.title"
-        :append-icon="purposes.ministry.isOpen ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-      >
+    <v-card rounded="s" :variant="purposes.ministry.isOpen ? 'text' : 'elevated'" class="mb-4 mt-2">
+      <v-card-item @click="purposes.ministry.isOpen = !purposes.ministry.isOpen" :title="purposes.ministry.title"
+        :append-icon="purposes.ministry.isOpen ? 'mdi-chevron-up' : 'mdi-chevron-down'">
         <template #prepend>
-          <VIcon :color="purposes.ministry.color" :icon="purposes.ministry.icon"/>
+          <VIcon :color="purposes.ministry.color" :icon="purposes.ministry.icon" />
         </template>
       </v-card-item>
       <v-expand-transition>
         <v-card v-if="purposes.ministry.isOpen" rounded="0" variant="text">
           <v-card class="ma-2" height="220" :image="step3" to="/purposes/ministry/step">
             <div class="fill-height bottom-gradient-darker d-flex flex-column align-center justify-end">
-              <h3 class="text-white">Семинар – «ШАГ 3»</h3>
-              <p class="text-mono text-white text-caption">Служение</p>
-              <v-btn
-                class="ma-2"
-                color="surface"
-                variant="outlined"
-                to="/purposes/ministry/step"
-              >
+              <h3 class="text-white">ШАГ 3 — служение</h3>
+              <p class="text-mono text-white text-caption">Узнавая больше о своей уникальности!</p>
+              <v-btn class="ma-2" color="surface" variant="outlined" to="/purposes/ministry/step">
                 Узнать больше
               </v-btn>
             </div>
           </v-card>
-          <v-expand-transition>
-            <v-card v-if="purposes.evangelism.isOpen" rounded="0" variant="text">
-              <v-slide-group>
-                <v-slide-group-item v-for="(pAct, i) in purposes.evangelism.actions" :key="i">
-                  <PurposeSliderItem :title="pAct.title" :route="pAct.route" :img="pAct.img" :href="pAct.href"/>
-                </v-slide-group-item>
-              </v-slide-group>
-            </v-card>
-          </v-expand-transition>
-          
-
-          <!-- <v-card
-            rounded="0"
-            variant="text"
-            class="ma-0"
-            to="/purposes/ministry/step"
-          >
-            <v-card-actions>
-              <VIcon :icon="purposes.ministry.icon" color="ministry" class="ml-2"/>
-              <VCardItem
-                title="Семинар - «ШАГ 3»"
-                subtitle="Узнавая больше о своей уникальности"
-              />
-            </v-card-actions>
-          </v-card> -->
-        </v-card>
-      </v-expand-transition>
-    </v-card>
-    <VDivider/>
-    <!-- --------------------------------------------------------------------------------------------------------------- -->
-    <v-card
-      rounded="s"
-      :variant="purposes.evangelism.isOpen ? 'text' : 'elevated'"
-      class="mb-4 mt-2"
-    >
-      <v-card-item
-        @click="purposes.evangelism.isOpen = !purposes.evangelism.isOpen"
-        :title="purposes.evangelism.title"
-        :append-icon="purposes.evangelism.isOpen ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-      >
-        <template #prepend>
-          <VIcon :color="purposes.evangelism.color" :icon="purposes.evangelism.icon"/>
-        </template>
-      </v-card-item>
-      <v-card class="ma-2" height="220" :image="step3" to="/purposes/ministry/step">
-            <div class="fill-height bottom-gradient-darker d-flex flex-column align-center justify-end">
-              <h3 class="text-white">Семинар – «ШАГ 3»</h3>
-              <p class="text-mono text-white text-caption">Служение</p>
-              <v-btn
-                class="ma-2"
-                color="surface"
-                variant="outlined"
-                to="/purposes/ministry/step"
-              >
-                Узнать больше
-              </v-btn>
-            </div>
-          </v-card>
-      <v-expand-transition>
-        <v-card v-if="purposes.evangelism.isOpen" rounded="0" variant="text">
           <v-slide-group>
-            <v-slide-group-item v-for="(pAct, i) in purposes.evangelism.actions" :key="i">
-              <PurposeSliderItem :title="pAct.title" :route="pAct.route" :img="pAct.img" :href="pAct.href"/>
+            <v-slide-group-item v-for="(pAct, i) in purposes.ministry.actions" :key="i">
+              <PurposeSliderItem :title="pAct.title" :route="pAct.route" :img="pAct.img" :href="pAct.href" />
             </v-slide-group-item>
           </v-slide-group>
         </v-card>
       </v-expand-transition>
     </v-card>
-    <VDivider/>
+    <VDivider />
+    <!-- --------------------------------------------------------------------------------------------------------------- -->
+    <v-card rounded="s" :variant="purposes.evangelism.isOpen ? 'text' : 'elevated'" class="mb-4 mt-2">
+      <v-card-item @click="purposes.evangelism.isOpen = !purposes.evangelism.isOpen" :title="purposes.evangelism.title"
+        :append-icon="purposes.evangelism.isOpen ? 'mdi-chevron-up' : 'mdi-chevron-down'">
+        <template #prepend>
+          <VIcon :color="purposes.evangelism.color" :icon="purposes.evangelism.icon" />
+        </template>
+      </v-card-item>
+      <v-expand-transition>
+        <v-card v-if="purposes.evangelism.isOpen" rounded="0" variant="text">
+          <v-card class="ma-2" height="220" :image="step4" to="/purposes/ministry/step">
+            <div class="fill-height bottom-gradient-darker d-flex flex-column align-center justify-end">
+              <h3 class="text-white">ШАГ 4 — благовестие</h3>
+              <p class="text-mono text-white text-caption">Узнавая больше о своём жизненном предназначении!</p>
+              <v-btn class="ma-2" color="surface" variant="outlined" to="/purposes/ministry/step">
+                Узнать больше
+              </v-btn>
+            </div>
+          </v-card>
+          <v-slide-group>
+            <v-slide-group-item v-for="(pAct, i) in purposes.evangelism.actions" :key="i">
+              <PurposeSliderItem :title="pAct.title" :route="pAct.route" :img="pAct.img" :href="pAct.href" />
+            </v-slide-group-item>
+          </v-slide-group>
+        </v-card>
+      </v-expand-transition>
+    </v-card>
+    <VDivider />
     <!-- --------------------------------------------------------------------------------------------------------------- -->
     <v-card rounded="xl" class="mb-4 mt-2 mx-2" to="/aboutChurch">
       <v-card-item title="О церкви" append-icon="mdi-chevron-right">
         <template #prepend>
-          <VIcon icon="mdi-church-outline"/>
+          <VIcon icon="mdi-church-outline" />
         </template>
       </v-card-item>
     </v-card>
     <!-- --------------------------------------------------------------------------------------------------------------- -->
     <v-card rounded="xl" class="mb-4 mt-2 mx-2">
       <v-card class="py-1" :color="purposes.help.color" rounded="0">
-        <v-card-item
-          @click="purposes.help.toggleOpen()"
-          :title="purposes.help.title"
-        >
+        <v-card-item @click="purposes.help.toggleOpen()" :title="purposes.help.title">
           <template #prepend>
-            <VIcon :icon="purposes.help.icon"/>
+            <VIcon :icon="purposes.help.icon" />
           </template>
           <template #append>
-            <VIcon class="mr-2" :icon="purposes.help.isOpen ? 'mdi-chevron-up' : 'mdi-chevron-down'"/>
+            <VIcon class="mr-2" :icon="purposes.help.isOpen ? 'mdi-chevron-up' : 'mdi-chevron-down'" />
           </template>
         </v-card-item>
       </v-card>
       <v-expand-transition>
         <v-card v-if="purposes.help.isOpen" rounded="0" variant="text">
-          <v-card
-            v-for="(pAct, i) in purposes.help.actions"
-            :key="i"
-            :to="pAct.route"
-          >
-            <VDivider/>
-            <v-card-item
-              :title="pAct.title"
-              :subtitle="pAct.subtitle"
-            >
+          <v-card v-for="(pAct, i) in purposes.help.actions" :key="i" :to="pAct.route">
+            <VDivider />
+            <v-card-item :title="pAct.title" :subtitle="pAct.subtitle">
               <template #prepend>
                 <v-avatar variant="outlined">
-                  <VIcon :icon="pAct.icon" size="large" color="primary"/>
+                  <VIcon :icon="pAct.icon" size="large" color="primary" />
                 </v-avatar>
               </template>
             </v-card-item>
@@ -302,7 +191,7 @@
 </template>
 
 <script setup>
-import {ref} from 'vue'
+import { ref } from 'vue'
 import PurposeSliderItem from '@/components/purposes/PurposeSliderItem.vue'
 
 // import pics
@@ -349,12 +238,7 @@ const purposes = ref({
         title: 'Песни',
         img: songs,
         href: 'https://band.link/mbvsing',
-      }, 
-      // {
-      //   title: 'Благословение на каждый день',
-      //   img: daily,
-      //   href: 'https://youtube.com/playlist?list=PLjjvxd6WcKV04vM9MkM6Gd69-qdkzpRbj&si=Rfh2J4VmqmlqTBrw',
-      // }, 
+      },
     ],
   },
   fellowship: {
@@ -380,12 +264,7 @@ const purposes = ref({
         title: 'Хочу открыть Малую Группу',
         img: openSG,
         route: `/purposes/fellowship/OpenSmallGroup`,
-      }, 
-      // {
-      //   title: 'Семинар - «ШАГ 1»',
-      //   img: step,
-      //   route: `/purposes/fellowship/step`,
-      // }, 
+      },
     ],
   },
   discipleship: {
@@ -399,34 +278,17 @@ const purposes = ref({
         title: 'Читаем Библию вместе',
         img: readBible,
         route: `/purposes/discipleship/readBible`,
-      }, 
+      },
       {
         title: 'Популярное богословие',
         img: popularTeology,
         route: `/purposes/discipleship/popularTeology`,
-      }, 
+      },
       {
         title: 'Материалы для духовного роста',
         img: readBible,
         route: `/purposes/discipleship/growthMaterials`,
-      }, 
-      // {
-      //   title: 'Наставничество',
-      //   subtitle: 'Мы поможем Вам узнать основы',
-      //   icon: 'mdi-account-arrow-up-outline',
-      //   route: '/purposes/discipleship/mentoring',
-      // }, {
-      //   title: `Семинар - «ШАГ 2»`,
-      //   subtitle: 'Узнавая больше о духовном развитии',
-      //   icon: 'mdi-school-outline',
-      //   route: '/purposes/discipleship/step',
-      // },
-      // {
-      //   title: 'Семейное служение',
-      //   subtitle: 'Твои корни',
-      //   icon: 'mdi-human-male-female-child',
-      //   route: '/home',
-      // },
+      },
     ],
   },
   ministry: {
@@ -435,6 +297,13 @@ const purposes = ref({
     color: 'ministry',
     icon: 'mdi-hand-heart-outline',
     isOpen: true,
+    actions: [
+      {
+        title: 'Хочу служить',
+        img: ,
+        route: '/purposes/',
+      },
+    ]
   },
   evangelism: {
     title: 'Поделиться верой',
@@ -504,10 +373,8 @@ const purposes = ref({
 
 <style>
 .bottom-gradient-darker {
-  background-image: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.5) 0%,
-    transparent 250px
-  );
+  background-image: linear-gradient(to top,
+      rgba(0, 0, 0, 0.5) 0%,
+      transparent 250px);
 }
 </style>
