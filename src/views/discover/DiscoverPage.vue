@@ -300,8 +300,18 @@ const purposes = ref({
     actions: [
       {
         title: 'Хочу служить',
-        img: ,
-        route: '/purposes/',
+        img: daily,
+        route: '/purposes/ministry/SignToMinistry',
+      },
+      {
+        title: '  Все служения',
+        img: daily,
+        route: '/purposes/ministry/allMinistries',
+      },
+      {
+        title: 'Благотоворительность',
+        img: daily,
+        route: '/purposes/ministry/charity',
       },
     ]
   },
@@ -313,21 +323,17 @@ const purposes = ref({
     isOpen: true,
     actions: [
       {
-        title: 'Семинар - «ШАГ 4»',
+        title: 'Евангелизационные проэкты',
         img: step4,
-        route: '/purposes/evangelism/step',
+        route: '/purposes/evangelism/evangelismProjects',
       }, {
         title: 'Кто твой один?',
         img: oneSq,
         route: '/purposes/evangelism/one',
       }, {
-        title: 'Вечно',
+        title: 'Чудеса Божьей славы',
         img: vechno,
-        route: '/purposes/evangelism/vechno',
-      }, {
-        title: 'Деяния',
-        img: steiger,
-        route: '/purposes/evangelism/outreach',
+        route: '/purposes/evangelism/miracles',
       },
     ],
   },
@@ -357,10 +363,6 @@ const purposes = ref({
         title: 'Духовная консультация',
         icon: 'mdi-account-question-outline',
         route: '/purposes/help/spiritualCounselling',
-      }, {
-        title: 'Ретрит',
-        icon: 'mdi-account-supervisor-outline',
-        route: '/purposes/help/retreat',
       }, {
         title: 'Есть вопрос?',
         icon: 'mdi-list-box-outline',

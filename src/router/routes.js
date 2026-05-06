@@ -37,12 +37,29 @@ export default [
         meta: {
           title: 'Календарь',
         },
-      }, {
+      },
+      {
         path: '/admin',
         name: 'Admin',
         component: AdminPage,
         meta: {
           title: 'Admin',
+        },
+      },
+      {
+        path: '/home/bishop',
+        name: 'Bishop',
+        component: AdminPage,
+        meta: {
+          title: 'Канал Епископа',
+        },
+      },
+      {
+        path: '/home/everydayBlessing',
+        name: 'EverydayBlessing',
+        component: AdminPage,
+        meta: {
+          title: 'Благословение на каждый день',
         },
       },
       // --------------------------------------------------------- WORSHIP ----------------------------------------------
@@ -54,7 +71,7 @@ export default [
           title: 'Молитвы',
           color: 'worship',
         },
-      }, 
+      },
       {
         path: '/purposes/worship/nightPrayer',
         name: 'NightPrayerWorship',
@@ -125,7 +142,7 @@ export default [
           color: 'ministry',
         },
       },
-       {
+      {
         path: '/purposes/ministry/signToMinistry',
         name: 'signToMinistry',
         component: () => import('@/views/purposes/ministry/views/SignToMinistryPage.vue'),
@@ -134,7 +151,7 @@ export default [
           color: 'ministry',
         },
       },
-       {
+      {
         path: '/purposes/ministry/allMinistries',
         name: 'allMinistries',
         component: () => import('@/views/purposes/ministry/views/AllMinistriesPage.vue'),
@@ -143,7 +160,7 @@ export default [
           color: 'ministry',
         },
       },
-       {
+      {
         path: '/purposes/ministry/charity',
         name: 'charity',
         component: () => import('@/views/purposes/ministry/views/CharityPage.vue'),
@@ -220,7 +237,7 @@ export default [
           color: 'ministry',
         },
       },
-       {
+      {
         path: '/purposes/evangelism/outreach',
         name: 'outreach',
         component: () => import('@/views/purposes/evangelism/views/OutreachPage.vue'),
@@ -229,7 +246,7 @@ export default [
           color: 'ministry',
         },
       },
-       {
+      {
         path: '/purposes/evangelism/evangelismProjects',
         name: 'evangelismProjects',
         component: () => import('@/views/purposes/evangelism/views/EvangelismProjectsPage.vue'),
@@ -238,7 +255,7 @@ export default [
           color: 'ministry',
         },
       },
-       {
+      {
         path: '/purposes/evangelism/miracles',
         name: 'miracles',
         component: () => import('@/views/purposes/evangelism/views/GodsMiraclesPage.vue'),
