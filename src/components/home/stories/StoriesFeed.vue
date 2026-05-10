@@ -16,13 +16,24 @@
     <v-slide-group v-show="!isPending" v-model="model" selected-class="bg-primary">
       <v-slide-group-item>
         <StoryCard 
-        title="Больше" 
+        title="" 
         link="/home/bishop" 
         link-label="Больше" 
-        link-color="primary" 
+        link-color="black" 
         :prev-img="bishop"
-        :story-imgs="bishop" 
-        color="primary" 
+        :story-imgs="bishopArray" 
+        color="black" 
+        />
+      </v-slide-group-item>
+      <v-slide-group-item>
+        <StoryCard 
+        title="" 
+        link="/home/bishop" 
+        link-label="Больше" 
+        link-color="black" 
+        :prev-img="bishop"
+        :story-imgs="bishopArray" 
+        color="black" 
         />
       </v-slide-group-item>
       <v-slide-group-item v-for="story in stories" :key="story.id">
@@ -50,6 +61,9 @@ import bishop from '@/assets/pastors/DD.jpg'
 
 const newsfeedStore = useContentStore()
 const { stories } = storeToRefs(newsfeedStore)
+const bishopArray = [{
+  strImgUrl: bishop,
+}]
 
 const appState = useAppState()
 const { isPending } = storeToRefs(appState)

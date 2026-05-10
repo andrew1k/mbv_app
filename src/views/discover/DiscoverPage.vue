@@ -74,24 +74,6 @@
               <PurposeSliderItem :title="pAct.title" :route="pAct.route" :img="pAct.img" />
             </v-slide-group-item>
           </v-slide-group>
-          <!-- <v-card
-            elevation="0"
-            rounded="0"
-            variant="text"
-            class="ma-0"
-            v-for="(pAct, i) in purposes.discipleship.actions"
-            :key="i"
-            :to="pAct.route"
-          >
-            <VDivider/>
-            <v-card-actions>
-              <VIcon :icon="pAct.icon" color="discipleship" class="ml-2"/>
-              <VCardItem
-                :title="pAct.title"
-                :subtitle="pAct.subtitle"
-              />
-            </v-card-actions>
-          </v-card> -->
         </v-card>
       </v-expand-transition>
     </v-card>
@@ -195,7 +177,6 @@ import { ref } from 'vue'
 import PurposeSliderItem from '@/components/purposes/PurposeSliderItem.vue'
 
 // import pics
-import steiger from '@/assets/evangelismPics/steiger.jpg'
 import vechno from '@/assets/evangelismPics/vechnoSq.png'
 import step4 from '@/assets/evangelismPics/step.jpg'
 import oneSq from '@/assets/evangelismPics/OneSq.jpg'
